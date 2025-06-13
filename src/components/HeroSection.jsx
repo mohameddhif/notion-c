@@ -12,10 +12,10 @@ const HeroSection = () => {
       </p>
       <div className="flex justify-center my-10">
         <a
-          href="#" className="bg-gradient-to-r from-blue-300 to-blue-400 py-3 px-4 mx-3 rounded-md">
+          href="#" className="bg-gradient-to-r from-blue-300 to-blue-400 py-3 px-4 mx-3 rounded-md ">
           Essayer Notion gratuitement
         </a>
-        <a href="#" className="py-3 px-4 mx-3 rounded-md ">
+        <a href="#" className="py-3 px-4 mx-3 rounded-md border-2">
           Demander un démo
         </a>
       </div>

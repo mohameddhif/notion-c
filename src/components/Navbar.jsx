@@ -45,13 +45,13 @@ const Navbar = () => {
                 onClick={() => handleAuthClick(true)}
                 className="py-2 px-4 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
               >
-                Sign In
+                Se connecter
               </button>
               <button
                 onClick={() => handleAuthClick(false)}
                 className="bg-gradient-to-r from-blue-400 to-blue-600 text-white py-2 px-4 rounded-md hover:from-blue-500 hover:to-blue-700 transition-colors"
               >
-                Create account
+                S'inscrire
               </button>
             </div>
             <div className="lg:hidden md:flex flex-col justify-end">
@@ -79,13 +79,13 @@ const Navbar = () => {
                   onClick={() => handleAuthClick(true)}
                   className="w-full py-2 px-4 border border-gray-300 rounded-md hover:bg-gray-50"
                 >
-                  Sign In
+                  Se connecter
                 </button>
                 <button
                   onClick={() => handleAuthClick(false)}
                   className="w-full bg-gradient-to-r from-blue-400 to-blue-600 text-white py-2 px-4 rounded-md hover:from-blue-500 hover:to-blue-700"
                 >
-                  Create account
+                  S'inscrire
                 </button>
               </div>
             </div>
@@ -148,7 +148,7 @@ const Navbar = () => {
                 type="submit"
                 className="w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white py-2 px-4 rounded-md hover:from-blue-600 hover:to-blue-700 transition-colors"
               >
-                {isLogin ? "Sign In" : "Sign Up"}
+                {isLogin ? "Se connecter" : "S'inscrire"}
               </button>
             </form>
 
@@ -160,17 +160,17 @@ const Navbar = () => {
                     onClick={() => setIsLogin(false)}
                     className="text-blue-500 hover:underline"
                   >
-                    Sign up
+                    S'inscrire
                   </button>
                 </p>
               ) : (
                 <p>
-                  Already have an account?{" "}
+                  Vous avez déjà un compte?{" "}
                   <button 
                     onClick={() => setIsLogin(true)}
                     className="text-blue-500 hover:underline"
                   >
-                    Sign in
+                    Se connecter
                   </button>
                 </p>
               )}
