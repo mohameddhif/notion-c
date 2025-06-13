@@ -5,14 +5,14 @@ import Workflow from "./components/Workflow";
 import Footer from "./components/Footer";
 import Pricing from "./components/Pricing";
 import FAQ from "./components/faq";
-import SideMenu from "./components/proj";
+import Main from "./components/proj";
 import LandingPage from "./pages/landing";
 
 const App = () => {
   return (
     <>
       <div>
-        <LandingPage />
+        <Main />
       </div>
     </>
   );
