@@ -1,12 +1,47 @@
 import React, { useState } from 'react';
-import { ChevronLeft } from 'lucide-react';
+import { Calendar, ChevronLeft } from 'lucide-react';
 import user from '../assets/profile-pictures/user1.jpg';
 import {menuItems} from '../constants/index';
 import SideMenu from '../components/sideMenu';
+import FullCalendar from '@fullcalendar/react';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import  ProjectsList  from '../components/ProjectsList';
+import {sampleProjects} from '../constants/index'
+import frLocale from '@fullcalendar/core/locales/fr';
+
+function CalendarComponent() {
+  return (
+    <FullCalendar
+      plugins={[dayGridPlugin]}
+      initialView="dayGridMonth"
+      fixedWeekCount={false} // Disable the default 6-week display
+      height="100%" // Adjust height to content
+      contentHeight="auto"
+      locale={frLocale}
+      events={[
+        { title: 'Task 1', date: '2025-06-20' },
+        { title: 'Demo', date: '2025-06-25' }
+      ]}
+      headerToolbar={{
+        left: 'prev',
+        center: 'title',
+        right: 'next'
+      }}
+      views={{
+        dayGridMonth: {
+          dayCount: 35, 
+          type: 'dayGrid',
+          duration: { months: 1 }
+        }
+      }}
+    />
+  );
+}
+
 
 const Main = () => {
   const [collapsed, setCollapsed] = useState(false);
-  const [activeItem, setActiveItem] = useState('Home');
+  const [activeItem, setActiveItem] = useState('Tableau de Bord');
 
   const toggleCollapse = () => {
     setCollapsed(!collapsed);
@@ -14,9 +49,9 @@ const Main = () => {
   
 
   return (
-    <div className="flex h-screen bg-gray-100 overflow-hidden">
-      <div className={`bg-white shadow-lg flex flex-col ${collapsed ? 'w-16' : 'w-64'} transition-all duration-300`}>
-        <div className="p-4 flex items-center justify-between border-b">
+    <div className="flex h-screen bg-gray-100 overflow-hidden ">
+      <div className={`bg-white shadow-lg flex flex-col ${collapsed ? 'w-16' : 'w-64'} transition-all duration-300 border-r shadow-none`}>
+        <div className="p-4 flex items-center justify-between border-b-1 ">
           {!collapsed && <h1 className="text-xl font-bold">Notion</h1>}
           <button 
             onClick={toggleCollapse}
@@ -25,21 +60,19 @@ const Main = () => {
             <ChevronLeft className={`transition-transform ${collapsed ? 'rotate-180' : ''}`} size={20} />
           </button>
         </div>
-        
-        
-          <div className="p-4 border-t">
-            <div className="flex items-center">
-              <div>
-                <img src={user} alt="pp" className="w-8 h-8 rounded-full flex items-center justify-center" />
-              </div>
-              {!collapsed && (
-              <div className="ml-3">
-                <p className="text-sm font-medium">Mohamed Dhif</p>
-              </div>)}
+        <div className="p-4 border-t">
+          <div className="flex items-center">
+            <div>
+              <img src={user} alt="pp" className="w-8 h-8 rounded-full flex items-center justify-center" />
             </div>
+            {!collapsed && (
+              <div className="ml-3">
+              <p className="text-sm font-medium">Mohamed Dhif</p>
+            </div>)}
           </div>
-        
-        <nav className="flex-1 overflow-y-auto">
+        </div>
+
+        <nav className="flex-1 overflow-y-auto  ">
           <ul className="space-y-1 p-2">
             {menuItems.map((item) => (
               <li key={item.name}>
@@ -59,17 +92,27 @@ const Main = () => {
         
       </div>
 
-      <div className="flex-1 flex flex-col overflow-hidden">
-        <div className="bg-white p-4 shadow-sm">
-          <h1 className="text-xl font-bold">{activeItem}</h1>
-        </div>
-        
-        <div className="flex-1 overflow-y-auto p-6">
-          <div className="max-w-4xl mx-auto">
+      <div className="flex-1 flex flex-col h-full overflow-hidden">
+  {/* Header Section */}
+  <div className="bg-white p-4 shadow-sm sticky top-0 z-10">
+    <h1 className="text-xl font-bold">{activeItem}</h1>
+  </div>
   
-          </div>
+  {/* Content Area */}
+  <div className="flex-1 overflow-y-auto p-4">
+    <div className="max-w-7xl mx-auto w-full">
+      {activeItem === 'Calendrier' && (
+        <div className="h-full min-h-[600px]">
+          <CalendarComponent />
         </div>
-      </div>
+      )}
+      
+      {activeItem === 'Projets' && (
+        <ProjectsList projects={sampleProjects} />
+      )}
+    </div>
+  </div>
+</div>
     </div>
   );
 };

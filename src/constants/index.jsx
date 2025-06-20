@@ -157,11 +157,47 @@ export const faqs = [
 ];
 
  export const menuItems = [
-  { name: 'Home', icon: <Home size={20} /> },
+  { name: 'Tableau de Bord', icon: <Home size={20} /> },
   { name: 'Calendrier', icon: <Calendar size={20} /> },
   { name: 'Projets', icon: <Folder size={20} /> },
   { name: 'Documents', icon: <FileText size={20} /> },
   { name: 'Paramètres', icon: <Settings size={20} /> },
   { name: 'Equipe', icon: <Users size={20} /> },
   
+];
+
+export const sampleProjects = [
+  {
+    projectName: "Refonte du Site Web",
+    status: "En Cours",
+    statusColor: "blue",
+    templateName: "Modèle Corporatif",
+    progress: 35.5,
+    completedTasks: 7,
+    totalTasks: 20,
+    startDate: "1 mars 2024",
+    endDate: "31 mars 2024"
+  },
+  {
+    projectName: "Application Mobile",
+    status: "En Attente",
+    statusColor: "amber",
+    templateName: "Kit UI Moderne",
+    progress: 15,
+    completedTasks: 3,
+    totalTasks: 15,
+    startDate: "15 février 2024",
+    endDate: "30 avril 2024"
+  },
+  {
+    projectName: "Intégration API",
+    status: "Terminé",
+    statusColor: "green",
+    templateName: "Modèle Technique",
+    progress: 100,
+    completedTasks: 12,
+    totalTasks: 12,
+    startDate: "10 janvier 2024",
+    endDate: "5 février 2024"
+  }
 ];
