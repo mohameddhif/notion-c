@@ -5,7 +5,7 @@ const ProjectCard = ({
   projectName = "Nouveau Projet",
   status = "Upcoming",
   statusColor = "amber",
-  templateName = "",
+  category = "",
   progress = 0,
   completedTasks = 0,
   totalTasks = 1,
@@ -25,8 +25,7 @@ const ProjectCard = ({
   const statusClasses = statusColorMap[statusColor] || statusColorMap.amber;
 
   return (
-    <div className="bg-white rounded-lg shadow-sm p-6 w-full hover:shadow-md transition-shadow border border-gray-100 flex flex-col h-full min-w-[300px] max-w-[400px] mx-auto">
-      {/* Rest of your ProjectCard component remains the same */}
+    <div className="bg-white rounded-lg shadow-sm p-6 w-full hover:shadow-md transition-shadow border border-gray-100 flex flex-col h-full min-w-[380px]  max-w-[600px] hover:cursor-pointer">
       <div className="flex justify-between items-center mb-3">
         <h3 className="text-lg font-semibold text-gray-800 truncate max-w-[220px]">
           {projectName}
@@ -36,8 +35,8 @@ const ProjectCard = ({
         </span>
       </div>
       
-      {templateName && (
-        <p className="text-gray-600 mb-4 text-sm">{templateName}</p>
+      {category && (
+        <p className="text-gray-600 mb-4 text-sm">{category}</p>
       )}
       
       <div className="mb-4">
@@ -87,7 +86,7 @@ const ProjectsList = ({ projects }) => {
               projectName={project.projectName}
               status={project.status}
               statusColor={project.statusColor}
-              templateName={project.templateName}
+              category={project.category}
               progress={project.progress}
               completedTasks={project.completedTasks}
               totalTasks={project.totalTasks}

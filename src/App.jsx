@@ -1,14 +1,22 @@
-import Main from "./pages/home";
-import LandingPage from "./pages/landing";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import MainLayout from './pages/MainLayout';
+import Dashboard from './pages/Dashboard';
+import Calendar from './pages/Calendar';
+import Projects from './pages/Projects.jsx';
 
-const App = () => {
+function App() {
   return (
-    <>
-      <div>
-        <Main />
-      </div>
-    </>
+    <Router>
+      <Routes>
+        <Route path="/" element={<MainLayout />}>
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="calendrier" element={<Calendar />} />
+          <Route path="projets" element={<Projects />} />
+        </Route>
+        <Route path="*" element={<div className="p-10 text-center text-2xl">404 Page Not Found</div>} />
+      </Routes>
+    </Router>
   );
-};
+}
 
 export default App;

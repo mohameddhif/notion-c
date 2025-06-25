@@ -156,14 +156,13 @@ export const faqs = [
   },
 ];
 
- export const menuItems = [
-  { name: 'Tableau de Bord', icon: <Home size={20} /> },
-  { name: 'Calendrier', icon: <Calendar size={20} /> },
-  { name: 'Projets', icon: <Folder size={20} /> },
-  { name: 'Documents', icon: <FileText size={20} /> },
-  { name: 'Paramètres', icon: <Settings size={20} /> },
-  { name: 'Equipe', icon: <Users size={20} /> },
-  
+export const menuItems = [
+  { name: 'Tableau de Bord', path: '/dashboard', icon: <Home size={18} /> },
+  { name: 'Calendrier', path: '/calendrier', icon: <Calendar size={18} /> },
+  { name: 'Projets', path: '/projets', icon: <Folder size={18} /> },
+  { name: 'Documents', path: '/documents', icon: <FileText size={20} /> },
+  { name: 'Paramètres', path: '/parametres', icon: <Settings size={20} /> },
+  { name: 'Equipe', path: '/equipe', icon: <Users size={20} /> },
 ];
 
 export const sampleProjects = [
@@ -171,7 +170,7 @@ export const sampleProjects = [
     projectName: "Refonte du Site Web",
     status: "En Cours",
     statusColor: "blue",
-    templateName: "Modèle Corporatif",
+    category: "Modèle Corporatif",
     progress: 35.5,
     completedTasks: 7,
     totalTasks: 20,
@@ -182,7 +181,7 @@ export const sampleProjects = [
     projectName: "Application Mobile",
     status: "En Attente",
     statusColor: "amber",
-    templateName: "Kit UI Moderne",
+    category: "Kit UI Moderne",
     progress: 15,
     completedTasks: 3,
     totalTasks: 15,
@@ -193,7 +192,7 @@ export const sampleProjects = [
     projectName: "Intégration API",
     status: "Terminé",
     statusColor: "green",
-    templateName: "Modèle Technique",
+    category: "Modèle Technique",
     progress: 100,
     completedTasks: 12,
     totalTasks: 12,
