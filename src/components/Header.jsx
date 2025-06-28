@@ -4,7 +4,7 @@ import user from '../assets/profile-pictures/user1.jpg';
 
 const Header = ({ activeItem, toggleSidebar }) => {
   return (
-    <div className="bg-white px-4 py-3 shadow-sm sticky top-0 z-30 flex items-center justify-between gap-4 flex-wrap">
+    <div className="bg-white px-4 py-2 border-b-2 sticky top-0 z-30 flex items-center justify-between gap-4 flex-wrap">
       <div className="flex items-center gap-3">
         <button className="md:hidden p-1 rounded hover:bg-gray-200" onClick={toggleSidebar}>
           <Menu size={20} />

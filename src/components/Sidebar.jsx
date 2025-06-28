@@ -6,12 +6,12 @@ import { menuItems } from '../constants/index';
 const Sidebar = ({ isOpen, isCollapsed, toggleSidebar, toggleCollapse }) => {
   return (
     <div
-      className={`fixed top-0 left-0 z-50 h-full bg-white border-r shadow-lg transform transition-transform duration-300
+      className={`fixed top-0 left-0 z-50 h-full bg-white border-r-2 transform transition-transform duration-300
         ${isOpen ? 'translate-x-0' : '-translate-x-full'}
         md:translate-x-0 md:relative md:flex md:flex-col
-        ${isCollapsed ? 'w-16' : 'w-64'}`}
-    >
-      <div className="p-4 flex items-center justify-between border-b">
+        ${isCollapsed ? 'w-16' : 'w-64'}`} >
+      
+      <div className="px-4 py-4 flex items-center justify-between">
         {!isCollapsed && <h1 className="text-xl font-bold">Notion</h1>}
         <button
           onClick={isOpen ? toggleSidebar : toggleCollapse}
