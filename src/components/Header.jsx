@@ -9,7 +9,6 @@ const Header = ({ activeItem, toggleSidebar }) => {
         <button className="md:hidden p-1 rounded hover:bg-gray-200" onClick={toggleSidebar}>
           <Menu size={20} />
         </button>
-        <h1 className="text-xl font-bold">{activeItem}</h1>
       </div>
 
       <div className="flex items-center gap-4 ml-auto">
@@ -28,7 +27,7 @@ const Header = ({ activeItem, toggleSidebar }) => {
 
         <div className="flex items-center space-x-2">
           <img src={user} alt="User" className="w-8 h-8 rounded-full" />
-          <span className="hidden sm:block text-sm font-medium">Mohamed Dhif</span>
+          <span className="hidden lg:block text-sm font-medium">Mohamed Dhif</span>
         </div>
       </div>
     </div>

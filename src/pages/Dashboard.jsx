@@ -1,5 +1,7 @@
+import TodoKanban from "./MyComponent";
+
 const Dashboard = () => {
-    return <div></div>;
+    return <TodoKanban />;
   };
   
   export default Dashboard;

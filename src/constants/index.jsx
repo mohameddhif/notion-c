@@ -4,7 +4,7 @@ import { PencilRuler } from 'lucide-react';
 import { Computer } from 'lucide-react';
 import { Crop } from 'lucide-react';
 import { TrendingUp } from 'lucide-react';
-import { Home, Folder, Calendar, Settings, Users, FileText, ChevronLeft } from 'lucide-react';
+import { Home, Folder, Calendar, Settings, Users, FileText, ChevronLeft, CheckCheck  } from 'lucide-react';
 
 import { Factory } from 'lucide-react';
 
@@ -160,7 +160,7 @@ export const menuItems = [
   { name: 'Tableau de Bord', path: '/dashboard', icon: <Home size={18} /> },
   { name: 'Calendrier', path: '/calendrier', icon: <Calendar size={18} /> },
   { name: 'Projets', path: '/projets', icon: <Folder size={18} /> },
-  { name: 'Documents', path: '/documents', icon: <FileText size={20} /> },
+  { name: 'Taches', path: '/documents', icon: <CheckCheck size={20} /> },
   { name: 'Paramètres', path: '/parametres', icon: <Settings size={20} /> },
   { name: 'Equipe', path: '/equipe', icon: <Users size={20} /> },
 ];

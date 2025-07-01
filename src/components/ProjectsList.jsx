@@ -25,7 +25,9 @@ const ProjectCard = ({
   const statusClasses = statusColorMap[statusColor] || statusColorMap.amber;
 
   return (
-    <div className="bg-white rounded-lg shadow-sm p-6 w-full hover:shadow-md transition-shadow border border-gray-100 flex flex-col h-full min-w-[380px]  max-w-[600px] hover:cursor-pointer">
+    
+    <div className="bg-white rounded-lg shadow-sm p-6 w-full hover:shadow-md transition-shadow border border-gray-200 flex flex-col h-full min-w-[380px]  max-w-[600px] hover:cursor-pointer">
+      
       <div className="flex justify-between items-center mb-3">
         <h3 className="text-lg font-semibold text-gray-800 truncate max-w-[220px]">
           {projectName}
@@ -76,12 +78,13 @@ const ProjectCard = ({
   );
 };
 
-const ProjectsList = ({ projects }) => {
+const ProjectsList = ({ projects, onProjectClick }) => {
   return (
-    <div className="container mx-auto px-4 py-8">    
-      <div className="grid grid-cols-1 80:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8">
         {projects.map((project, index) => (
-          <div key={index} className="flex justify-center">
+          <div key={index}
+          className="flex justify-center rounded cursor-pointer hover:shadow-md transition"
+          onClick={() => onProjectClick(project)}>
             <ProjectCard
               projectName={project.projectName}
               status={project.status}
@@ -96,7 +99,6 @@ const ProjectsList = ({ projects }) => {
           </div>
         ))}
       </div>
-    </div>
   );
 };
 
