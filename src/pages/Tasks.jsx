@@ -56,7 +56,7 @@ const Tasks = () => {
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
-      <h1 className="text-3xl font-bold mb-6">Taches</h1>
+      <h1 className="text-3xl font-bold mb-6 text-blue-600">Taches</h1>
       <DragDropContext onDragEnd={onDragEnd}>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
           {Object.entries(columns).map(([columnId, column], idx) => (

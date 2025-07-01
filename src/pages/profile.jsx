@@ -21,7 +21,7 @@ const ProfilePage = () => {
 
   return (
     <div className="max-w-3xl mx-auto p-8 bg-white rounded-lg shadow-md">
-      <h1 className="text-2xl font-bold mb-6">Mon Profil</h1>
+      <h1 className="text-3xl font-bold mb-6 text-blue-600">Mon Profil</h1>
 
       <div className="flex flex-col items-center mb-6">
         <div className="w-32 h-32 rounded-full bg-gray-200 overflow-hidden">

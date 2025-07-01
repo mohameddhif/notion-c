@@ -1,6 +1,6 @@
+import { useState } from 'react';
 import ProjectsList from '../components/ProjectsList';
 import { sampleProjects } from '../constants/index';
-import { useState } from 'react';
 
 const defaultProject = {
   title: '',
@@ -11,6 +11,7 @@ const defaultProject = {
   completedTasks: 0,
   totalTasks: 0,
   status: 'En attente',
+  tasks: [],
 };
 
 const statusOptions = ['En attente', 'En cours', 'Complété', 'En pause', 'Annulé'];
@@ -19,16 +20,19 @@ const Projects = () => {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [project, setProject] = useState(defaultProject);
   const [editProject, setEditProject] = useState(null);
+  const [newTask, setNewTask] = useState({ title: '', description: '' });
 
   const handleCreateClick = () => {
     setEditProject(null);
-    setProject(defaultProject);
+    setProject({ ...defaultProject });
+    setNewTask({ title: '', description: '' });
     setShowCreateModal(true);
   };
 
   const handleProjectClick = (proj) => {
     setEditProject(proj);
-    setProject({ ...proj });
+    setProject({ ...proj, tasks: proj.tasks || [] });
+    setNewTask({ title: '', description: '' });
     setShowCreateModal(true);
   };
 
@@ -43,19 +47,37 @@ const Projects = () => {
       progress: updatedProgress,
     };
 
-    // Update logic here: send to API or add to state
     console.log('Saved project:', updatedProject);
     setShowCreateModal(false);
   };
 
+  const handleAddTask = () => {
+    if (!newTask.title.trim()) return;
+    setProject((prev) => ({
+      ...prev,
+      tasks: [...prev.tasks, newTask],
+    }));
+    setNewTask({ title: '', description: '' });
+  };
+
+  const handleDeleteTask = (index) => {
+    const updatedTasks = [...project.tasks];
+    updatedTasks.splice(index, 1);
+    setProject((prev) => ({
+      ...prev,
+      tasks: updatedTasks,
+    }));
+  };
+
   return (
     <div className="container mx-auto px-4 py-8">
+      <div className="text-3xl font-bold mb-6 text-blue-600">Projets</div>
       <div className="flex justify-end">
         <button
           onClick={handleCreateClick}
           className="mb-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg shadow-sm transition duration-200"
         >
-          {editProject ? 'Modifier un projet' : 'Créer un projet'}
+          Créer
         </button>
       </div>
 
@@ -63,7 +85,7 @@ const Projects = () => {
 
       {showCreateModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white rounded-lg shadow-lg w-full max-w-3xl p-8 relative">
+          <div className="bg-white rounded-lg shadow-lg w-full max-w-3xl p-8 relative max-h-[90vh] overflow-y-auto">
             <button
               onClick={() => setShowCreateModal(false)}
               className="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-xl font-bold"
@@ -158,6 +180,55 @@ const Projects = () => {
                 value={project.description}
                 onChange={(e) => setProject({ ...project, description: e.target.value })}
               />
+            </div>
+
+            {/* 🔧 Tasks Section */}
+            <div className="mb-6">
+              <label className="text-sm font-semibold block mb-2">Tâches</label>
+              <div className="flex gap-2 mb-3">
+                <input
+                  type="text"
+                  placeholder="Titre"
+                  value={newTask.title}
+                  onChange={(e) => setNewTask({ ...newTask, title: e.target.value })}
+                  className="w-1/2 border border-gray-300 rounded px-3 py-2"
+                />
+                <input
+                  type="text"
+                  placeholder="Description"
+                  value={newTask.description}
+                  onChange={(e) => setNewTask({ ...newTask, description: e.target.value })}
+                  className="w-1/2 border border-gray-300 rounded px-3 py-2"
+                />
+                <button
+                  onClick={handleAddTask}
+                  className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+                >
+                  Ajouter
+                </button>
+              </div>
+
+              {project.tasks.length > 0 && (
+                <ul className="divide-y border rounded bg-gray-50">
+                  {project.tasks.map((task, index) => (
+                    <li
+                      key={`${task.title}-${index}`}
+                      className="p-3 flex justify-between items-start"
+                    >
+                      <div>
+                        <div className="font-medium">{task.title}</div>
+                        <div className="text-sm text-gray-500">{task.description}</div>
+                      </div>
+                      <button
+                        onClick={() => handleDeleteTask(index)}
+                        className="text-red-500 hover:text-red-700 text-sm"
+                      >
+                        Supprimer
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
 
             <div className="flex justify-end space-x-4">

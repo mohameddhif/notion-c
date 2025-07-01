@@ -53,84 +53,86 @@ const Calendar = () => {
   };
 
   return (
-    <div className="p-6 bg-white rounded-xl shadow-md border border-blue-200">
-      <h2 className="text-2xl font-bold text-blue-600 mb-4">Calendrier</h2>
+    <>
+      <h1 className="text-3xl font-bold mb-6 text-blue-600">Calendrier</h1>
+      <div className="p-6 bg-white rounded-xl shadow-md border border-blue-200">
 
-      {/* FullCalendar */}
-      <FullCalendar
-        plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-        initialView="dayGridMonth"
-        headerToolbar={{
-          left: 'prev,next today',
-          center: 'title',
-          right: 'dayGridMonth,timeGridWeek,timeGridDay',
-          
-        }}
-        events={events}
-        dateClick={handleDateClick}
-        eventClick={handleEventClick}
-        height="auto"
-        locales={[frLocale]}
-        locale="fr"
-      />
+        {/* FullCalendar */}
+        <FullCalendar
+          plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+          initialView="dayGridMonth"
+          headerToolbar={{
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,timeGridDay',
+            
+          }}
+          events={events}
+          dateClick={handleDateClick}
+          eventClick={handleEventClick}
+          height="auto"
+          locales={[frLocale]}
+          locale="fr"
+        />
 
-      {/* Add Event Modal */}
-      {showAddModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-md w-96">
-            <h3 className="text-xl font-semibold text-blue-600 mb-4">Ajouter un événement</h3>
-            <input
-              type="text"
-              className="w-full border border-gray-300 rounded px-3 py-2 mb-4"
-              placeholder="Titre de l'événement"
-              value={newEventTitle}
-              onChange={(e) => setNewEventTitle(e.target.value)}
-              autoFocus
-            />
-            <div className="flex justify-end space-x-3">
-              <button
-                className="bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold py-2 px-4 rounded"
-                onClick={() => setShowAddModal(false)}
-              >
-                Annuler
-              </button>
-              <button
-                className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
-                onClick={handleAddEvent}
-              >
-                Ajouter
-              </button>
+        {/* Add Event Modal */}
+        {showAddModal && (
+          <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+            <div className="bg-white p-6 rounded-lg shadow-md w-96">
+              <h3 className="text-xl font-semibold text-blue-600 mb-4">Ajouter un événement</h3>
+              <input
+                type="text"
+                className="w-full border border-gray-300 rounded px-3 py-2 mb-4"
+                placeholder="Titre de l'événement"
+                value={newEventTitle}
+                onChange={(e) => setNewEventTitle(e.target.value)}
+                autoFocus
+              />
+              <div className="flex justify-end space-x-3">
+                <button
+                  className="bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold py-2 px-4 rounded"
+                  onClick={() => setShowAddModal(false)}
+                >
+                  Annuler
+                </button>
+                <button
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
+                  onClick={handleAddEvent}
+                >
+                  Ajouter
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {/* Delete Event Modal */}
-      {showDeleteModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-md w-96">
-            <h3 className="text-lg font-semibold text-red-600 mb-4">Supprimer l'événement</h3>
-            <p className="mb-4">
-              Êtes-vous sûr de vouloir supprimer "<strong>{selectedEvent.title}</strong>" ?
-            </p>
-            <div className="flex justify-end space-x-3">
-              <button
-                className="bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold py-2 px-4 rounded"
-                onClick={() => setShowDeleteModal(false)}
-              >
-                Annuler
-              </button>
-              <button
-                className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded"
-                onClick={handleDeleteEvent}
-              >
-                Supprimer
-              </button>
+        {/* Delete Event Modal */}
+        {showDeleteModal && (
+          <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+            <div className="bg-white p-6 rounded-lg shadow-md w-96">
+              <h3 className="text-lg font-semibold text-red-600 mb-4">Supprimer l'événement</h3>
+              <p className="mb-4">
+                Êtes-vous sûr de vouloir supprimer "<strong>{selectedEvent.title}</strong>" ?
+              </p>
+              <div className="flex justify-end space-x-3">
+                <button
+                  className="bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold py-2 px-4 rounded"
+                  onClick={() => setShowDeleteModal(false)}
+                >
+                  Annuler
+                </button>
+                <button
+                  className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded"
+                  onClick={handleDeleteEvent}
+                >
+                  Supprimer
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+    </>
   );
 };
 

@@ -153,7 +153,7 @@ const SettingsPage = () => {
 
   return (
     <div className="p-6 max-w-6xl mx-auto">
-      <h1 className="text-3xl font-bold mb-6 text-gray-800">Paramètres</h1>
+      <h1 className="text-3xl font-bold mb-6 text-blue-600">Paramètres</h1>
 
       <div className="flex flex-wrap gap-2 mb-8">
         {tabs.map((tab) => (
