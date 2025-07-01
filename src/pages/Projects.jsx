@@ -1,61 +1,51 @@
 import ProjectsList from '../components/ProjectsList';
 import { sampleProjects } from '../constants/index';
-import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
-const tasks = [
-  { title: 'Wireframe UI', description: 'Create initial wireframes' },
-  { title: 'Setup Backend', description: 'Configure database and server' },
-  { title: 'Integrate API', description: 'Connect frontend with backend' },
-  { title: 'Test Features', description: 'Run unit and integration tests' },
-  { title: 'Fix Bugs', description: 'Resolve known issues' },
-  { title: 'Deploy App', description: 'Push app to production' }
-];
+const defaultProject = {
+  title: '',
+  type: '',
+  startDate: '',
+  endDate: '',
+  description: '',
+  completedTasks: 0,
+  totalTasks: 0,
+  status: 'En attente',
+};
+
+const statusOptions = ['En attente', 'En cours', 'Complété', 'En pause', 'Annulé'];
 
 const Projects = () => {
   const [showCreateModal, setShowCreateModal] = useState(false);
-  const [project, setProject] = useState({
-    title: '',
-    type: '',
-    startDate: '',
-    endDate: '',
-    description: '',
-    roles: [false, false, false, false, false, false],
-  });
-  const [editProject, setEditProject] = useState(null); // For editing
-
-  const navigate = useNavigate();
+  const [project, setProject] = useState(defaultProject);
+  const [editProject, setEditProject] = useState(null);
 
   const handleCreateClick = () => {
     setEditProject(null);
-    setProject({
-      title: '',
-      type: '',
-      startDate: '',
-      endDate: '',
-      description: '',
-      roles: [false, false, false, false, false, false],
-    });
+    setProject(defaultProject);
     setShowCreateModal(true);
-  };
-
-  const handleRoleChange = (index) => {
-    const updatedRoles = [...project.roles];
-    updatedRoles[index] = !updatedRoles[index];
-    setProject({ ...project, roles: updatedRoles });
   };
 
   const handleProjectClick = (proj) => {
     setEditProject(proj);
-    setProject({
-      title: proj.title,
-      type: proj.type,
-      startDate: proj.startDate,
-      endDate: proj.endDate,
-      description: proj.description,
-      roles: proj.roles || [false, false, false, false, false, false],
-    });
+    setProject({ ...proj });
     setShowCreateModal(true);
+  };
+
+  const handleSave = () => {
+    const updatedProgress =
+      project.totalTasks > 0
+        ? Math.round((project.completedTasks / project.totalTasks) * 100)
+        : 0;
+
+    const updatedProject = {
+      ...project,
+      progress: updatedProgress,
+    };
+
+    // Update logic here: send to API or add to state
+    console.log('Saved project:', updatedProject);
+    setShowCreateModal(false);
   };
 
   return (
@@ -65,7 +55,7 @@ const Projects = () => {
           onClick={handleCreateClick}
           className="mb-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg shadow-sm transition duration-200"
         >
-          Créer
+          {editProject ? 'Modifier un projet' : 'Créer un projet'}
         </button>
       </div>
 
@@ -73,7 +63,7 @@ const Projects = () => {
 
       {showCreateModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="bg-white rounded-lg shadow-lg w-full max-w-4xl p-8 relative">
+          <div className="bg-white rounded-lg shadow-lg w-full max-w-3xl p-8 relative">
             <button
               onClick={() => setShowCreateModal(false)}
               className="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-xl font-bold"
@@ -82,7 +72,7 @@ const Projects = () => {
             </button>
 
             <h2 className="text-sm text-gray-400 mb-6">
-              Projets / {editProject ? 'Modifier un projet' : 'Créer un projet'}
+              Projets / {editProject ? 'Modifier' : 'Créer'}
             </h2>
 
             <div className="grid grid-cols-2 gap-4 mb-6">
@@ -105,8 +95,8 @@ const Projects = () => {
               <div>
                 <label className="text-sm font-semibold block mb-1">Date de début</label>
                 <input
+                  type="date"
                   className="w-full border border-gray-300 rounded px-3 py-2"
-                  placeholder="JJ/MM/AAAA"
                   value={project.startDate}
                   onChange={(e) => setProject({ ...project, startDate: e.target.value })}
                 />
@@ -114,11 +104,50 @@ const Projects = () => {
               <div>
                 <label className="text-sm font-semibold block mb-1">Date de fin</label>
                 <input
+                  type="date"
                   className="w-full border border-gray-300 rounded px-3 py-2"
-                  placeholder="JJ/MM/AAAA"
                   value={project.endDate}
                   onChange={(e) => setProject({ ...project, endDate: e.target.value })}
                 />
+              </div>
+              <div>
+                <label className="text-sm font-semibold block mb-1">Statut</label>
+                <select
+                  className="w-full border border-gray-300 rounded px-3 py-2"
+                  value={project.status}
+                  onChange={(e) => setProject({ ...project, status: e.target.value })}
+                >
+                  {statusOptions.map((status) => (
+                    <option key={status} value={status}>
+                      {status}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className="text-sm font-semibold block mb-1">Tâches complétées / totales</label>
+                <div className="flex gap-2">
+                  <input
+                    type="number"
+                    min="0"
+                    value={project.completedTasks}
+                    onChange={(e) =>
+                      setProject({ ...project, completedTasks: parseInt(e.target.value || 0) })
+                    }
+                    className="w-1/2 border border-gray-300 rounded px-3 py-2"
+                    placeholder="Complétées"
+                  />
+                  <input
+                    type="number"
+                    min="1"
+                    value={project.totalTasks}
+                    onChange={(e) =>
+                      setProject({ ...project, totalTasks: parseInt(e.target.value || 1) })
+                    }
+                    className="w-1/2 border border-gray-300 rounded px-3 py-2"
+                    placeholder="Totales"
+                  />
+                </div>
               </div>
             </div>
 
@@ -131,50 +160,11 @@ const Projects = () => {
               />
             </div>
 
-            <div className="flex grid-cols-2 gap-4">
-              <div className="mb-6 w-full">
-                <label className="text-sm font-semibold block mb-2">Rôles</label>
-                <div className="border border-gray-300 rounded px-4 py-3 h-72 overflow-y-auto">
-                  <div className="mb-2 font-semibold">Team Lead</div>
-                  {[...Array(6)].map((_, i) => (
-                    <div key={i} className="flex items-center justify-between mb-2">
-                      <span>Yash</span>
-                      <span className="italic text-gray-500 text-sm">Chef du projet</span>
-                      <input
-                        type="checkbox"
-                        checked={project.roles[i]}
-                        onChange={() => handleRoleChange(i)}
-                        className="ml-4"
-                      />
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="mb-6 w-full">
-                <label className="text-sm font-semibold block mb-2">Tâches</label>
-                <div className="border border-gray-300 rounded px-4 py-3 max-h-72 overflow-y-auto">
-                  <div className="mb-2 font-semibold">Tâches assignables</div>
-                  {tasks.map((task, i) => (
-                    <div key={i} className="flex items-center justify-between mb-2">
-                      <div>
-                        <span className="block font-medium">{task.title}</span>
-                        <span className="italic text-gray-500 text-sm">{task.description}</span>
-                      </div>
-                      <input
-                        type="checkbox"
-                        checked={project.roles[i]}
-                        onChange={() => handleRoleChange(i)}
-                        className="ml-4"
-                      />
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
             <div className="flex justify-end space-x-4">
-              <button className="w-36 bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">
+              <button
+                className="w-36 bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700"
+                onClick={handleSave}
+              >
                 {editProject ? 'Modifier' : 'Créer'}
               </button>
               <button

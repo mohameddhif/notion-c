@@ -5,11 +5,11 @@ import {
   Menu,
   Search,
   User as UserIcon,
-  Settings as SettingsIcon,
   LogOut,
 } from 'lucide-react';
 import user from '../assets/profile-pictures/user1.jpg';
 import { menuItems } from '../constants/index';
+import { useNavigate } from 'react-router-dom';
 
 // Sidebar component
 const Sidebar = ({ isOpen, isCollapsed, toggleCollapse }) => {
@@ -56,10 +56,12 @@ const Sidebar = ({ isOpen, isCollapsed, toggleCollapse }) => {
 // Header component
 const Header = ({ activeItem, toggleSidebar }) => {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
-
+  
   const toggleProfileMenu = () => {
     setShowProfileMenu((prev) => !prev);
   };
+
+  const navigate = useNavigate();
 
   return (
     <div className="bg-white px-4 py-2 border-b-2 sticky top-0 z-30 flex items-center justify-between gap-4 flex-wrap">
@@ -67,7 +69,6 @@ const Header = ({ activeItem, toggleSidebar }) => {
         <button className="md:hidden p-1 rounded hover:bg-gray-200" onClick={toggleSidebar}>
           <Menu size={20} />
         </button>
-        <h2 className="text-lg font-semibold hidden md:block text-gray-700">{activeItem}</h2>
       </div>
 
       <div className="flex items-center gap-4 ml-auto relative">
@@ -84,7 +85,7 @@ const Header = ({ activeItem, toggleSidebar }) => {
           <Search className="absolute left-3 top-2.5 text-gray-400" size={18} />
         </div>
 
-        {/* Profile dropdown */}
+        {/* Menu Profil */}
         <div className="relative">
           <button
             onClick={toggleProfileMenu}
@@ -96,15 +97,15 @@ const Header = ({ activeItem, toggleSidebar }) => {
 
           {showProfileMenu && (
             <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border z-50">
-              <button className="w-full px-4 py-2 text-left hover:bg-gray-100 flex items-center gap-2">
+              <button
+                onClick={() => {
+                  navigate('/u/profil');
+                  setShowProfileMenu(false); }}
+                  className="w-full px-4 py-2 text-left hover:bg-gray-100 flex items-center gap-2"
+                >
                 <UserIcon size={16} /> Mon Profil
               </button>
-              <NavLink
-                to="/setting"
-                className="w-full px-4 py-2 text-left hover:bg-gray-100 flex items-center gap-2"
-              >
-                <SettingsIcon size={16} /> Paramètres
-              </NavLink>
+
               <button className="w-full px-4 py-2 text-left hover:bg-gray-100 flex items-center gap-2 text-red-500">
                 <LogOut size={16} /> Se déconnecter
               </button>

@@ -5,6 +5,7 @@ import Workflow from "../components/landingPage/Workflow";
 import Footer from "../components/landingPage/Footer";
 import Pricing from "../components/landingPage/Pricing";
 import FAQ from "../components/landingPage/faq";
+import { Outlet } from "react-router-dom";
 
 const LandingPage = () => {
   return (
@@ -17,6 +18,7 @@ const LandingPage = () => {
         <Pricing />
         <FAQ />
         <Footer />
+        <Outlet />
       </div>
     </>
   );

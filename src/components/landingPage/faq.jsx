@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
-import { faqs } from "../constants";
+import { faqs } from "../../constants";
 
 const FAQItem = ({ question, answer }) => {
   const [isOpen, setIsOpen] = useState(false);

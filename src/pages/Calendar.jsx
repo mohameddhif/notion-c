@@ -3,6 +3,8 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
+import frLocale from '@fullcalendar/core/locales/fr';
+
 
 const Calendar = () => {
   const [events, setEvents] = useState([]);
@@ -62,11 +64,14 @@ const Calendar = () => {
           left: 'prev,next today',
           center: 'title',
           right: 'dayGridMonth,timeGridWeek,timeGridDay',
+          
         }}
         events={events}
         dateClick={handleDateClick}
         eventClick={handleEventClick}
         height="auto"
+        locales={[frLocale]}
+        locale="fr"
       />
 
       {/* Add Event Modal */}

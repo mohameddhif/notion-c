@@ -157,12 +157,12 @@ export const faqs = [
 ];
 
 export const menuItems = [
-  { name: 'Tableau de Bord', path: '/dashboard', icon: <Home size={18} /> },
-  { name: 'Calendrier', path: '/calendrier', icon: <Calendar size={18} /> },
-  { name: 'Projets', path: '/projets', icon: <Folder size={18} /> },
-  { name: 'Taches', path: '/documents', icon: <CheckCheck size={20} /> },
-  { name: 'Paramètres', path: '/parametres', icon: <Settings size={20} /> },
-  { name: 'Equipe', path: '/equipe', icon: <Users size={20} /> },
+  { name: 'Tableau de Bord', path: 'dashboard', icon: <Home size={18} /> },
+  { name: 'Calendrier', path: 'calendrier', icon: <Calendar size={18} /> },
+  { name: 'Projets', path: 'projets', icon: <Folder size={18} /> },
+  { name: 'Taches', path: 'taches', icon: <CheckCheck size={20} /> },
+  { name: 'Paramètres', path: 'parametres', icon: <Settings size={20} /> },
+  { name: 'Equipe', path: 'equipe', icon: <Users size={20} /> },
 ];
 
 export const sampleProjects = [
