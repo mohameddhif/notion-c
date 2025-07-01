@@ -1,10 +1,10 @@
-import Navbar from "../components/Navbar";
-import HeroSection from "../components/HeroSection";
-import FeatureSection from "../components/FeatureSection";
-import Workflow from "../components/Workflow";
-import Footer from "../components/Footer";
-import Pricing from "../components/Pricing";
-import FAQ from "../components/faq";
+import Navbar from "../components/landingPage/Navbar";
+import HeroSection from "../components/landingPage/HeroSection";
+import FeatureSection from "../components/landingPage/FeatureSection";
+import Workflow from "../components/landingPage/Workflow";
+import Footer from "../components/landingPage/Footer";
+import Pricing from "../components/landingPage/Pricing";
+import FAQ from "../components/landingPage/faq";
 
 const LandingPage = () => {
   return (
