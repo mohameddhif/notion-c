@@ -2,37 +2,62 @@ import React, { useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import { Plus, Trash2 } from 'lucide-react';
 
-const initialColumns = {
-  todo: {
-    name: 'À faire',
-    items: [
-      { id: '1', title: 'Créer l’UI', description: 'Design de la maquette' },
-      { id: '2', title: 'Configurer le backend', description: 'Connexion à la base de données' },
-    ],
+const initialProjects = {
+  project1: {
+    name: 'Site Vitrine HVAC',
+    columns: {
+      todo: {
+        name: 'À faire',
+        items: [
+          { id: '1', title: 'Créer l’UI', description: 'Design de la maquette' },
+        ],
+      },
+      inProgress: {
+        name: 'En cours',
+        items: [],
+      },
+      done: {
+        name: 'Terminé',
+        items: [],
+      },
+    },
   },
-  inProgress: {
-    name: 'En cours',
-    items: [
-      { id: '3', title: 'API utilisateurs', description: 'Création et authentification' },
-    ],
-  },
-  done: {
-    name: 'Terminé',
-    items: [
-      { id: '4', title: 'Déploiement', description: 'Déploié sur Vercel' },
-    ],
+  project2: {
+    name: 'App de Gestion',
+    columns: {
+      todo: {
+        name: 'À faire',
+        items: [
+          { id: '2', title: 'Connexion DB', description: 'Setup MongoDB' },
+        ],
+      },
+      inProgress: {
+        name: 'En cours',
+        items: [
+          { id: '3', title: 'Auth', description: 'Login & Register' },
+        ],
+      },
+      done: {
+        name: 'Terminé',
+        items: [
+          { id: '4', title: 'Initialisation', description: 'Projet setup' },
+        ],
+      },
+    },
   },
 };
 
 const Tasks = () => {
-  const [columns, setColumns] = useState(initialColumns);
+  const [projects, setProjects] = useState(initialProjects);
+  const [activeProjectId, setActiveProjectId] = useState('project1');
 
   const onDragEnd = (result) => {
     const { source, destination } = result;
     if (!destination) return;
 
-    const sourceCol = columns[source.droppableId];
-    const destCol = columns[destination.droppableId];
+    const project = projects[activeProjectId];
+    const sourceCol = project.columns[source.droppableId];
+    const destCol = project.columns[destination.droppableId];
 
     const sourceItems = [...sourceCol.items];
     const destItems = [...destCol.items];
@@ -40,26 +65,47 @@ const Tasks = () => {
 
     if (source.droppableId === destination.droppableId) {
       sourceItems.splice(destination.index, 0, movedItem);
-      setColumns({
-        ...columns,
-        [source.droppableId]: { ...sourceCol, items: sourceItems },
-      });
     } else {
       destItems.splice(destination.index, 0, movedItem);
-      setColumns({
-        ...columns,
-        [source.droppableId]: { ...sourceCol, items: sourceItems },
-        [destination.droppableId]: { ...destCol, items: destItems },
-      });
     }
+
+    const newColumns = {
+      ...project.columns,
+      [source.droppableId]: { ...sourceCol, items: sourceItems },
+      [destination.droppableId]: { ...destCol, items: destItems },
+    };
+
+    setProjects({
+      ...projects,
+      [activeProjectId]: {
+        ...project,
+        columns: newColumns,
+      },
+    });
   };
+
+  const activeProject = projects[activeProjectId];
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
-      <h1 className="text-3xl font-bold mb-6 text-blue-600">Taches</h1>
+      <div className="flex items-center justify-between mb-6">
+        <h1 className="text-3xl font-bold text-blue-600">Tâches par Projet</h1>
+        <select
+          value={activeProjectId}
+          onChange={(e) => setActiveProjectId(e.target.value)}
+          className="ml-4 p-2 border rounded"
+        >
+          {Object.entries(projects).map(([id, project]) => (
+            <option key={id} value={id}>
+              {project.name}
+            </option>
+          ))}
+        </select>
+      </div>
+
       <DragDropContext onDragEnd={onDragEnd}>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-          {Object.entries(columns).map(([columnId, column], idx) => (
+          {Object.entries(activeProject.columns).map(([columnId, column]) => (
             <Droppable key={columnId} droppableId={columnId}>
               {(provided) => (
                 <div
