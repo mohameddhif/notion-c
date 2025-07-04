@@ -86,7 +86,7 @@ const Header = ({ activeItem, toggleSidebar }) => {
         </div>
 
         {/* Menu Profil */}
-        <div className="relative">
+        <div className="relative"> 
           <button
             onClick={toggleProfileMenu}
             className="flex items-center space-x-2 focus:outline-none"
@@ -142,7 +142,7 @@ const MainLayout = () => {
 
   return (
     <div className="flex h-screen overflow-hidden bg-gray-100">
-      {/* Backdrop for mobile */}
+      {/* mobile */}
       {isSidebarOpen && (
         <div
           className="fixed inset-0 z-40 bg-black bg-opacity-50 md:hidden"

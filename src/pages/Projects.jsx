@@ -3,15 +3,20 @@ import ProjectsList from '../components/ProjectsList';
 import { sampleProjects } from '../constants/index';
 
 const defaultProject = {
-  title: '',
-  type: '',
-  startDate: '',
-  endDate: '',
-  description: '',
+  projectName: '',
+  status: 'En attente',
+  statusColor: '',
+  category: '',
+  progress: 0,
   completedTasks: 0,
   totalTasks: 0,
-  status: 'En attente',
-  tasks: [],
+  startDate: '',
+  endDate: '',
+  columns: {
+    todo: { name: 'À faire', items: [] },
+    inProgress: { name: 'En cours', items: [] },
+    done: { name: 'Terminé', items: [] },
+  },
 };
 
 const statusOptions = ['En attente', 'En cours', 'Complété', 'En pause', 'Annulé'];
@@ -20,19 +25,19 @@ const Projects = () => {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [project, setProject] = useState(defaultProject);
   const [editProject, setEditProject] = useState(null);
-  const [newTask, setNewTask] = useState({ title: '', description: '' });
+  const [newTask, setNewTask] = useState({ title: '', description: '', date: '', assignedTo: '' });
 
   const handleCreateClick = () => {
     setEditProject(null);
     setProject({ ...defaultProject });
-    setNewTask({ title: '', description: '' });
+    setNewTask({ title: '', description: '', date: '', assignedTo: '' });
     setShowCreateModal(true);
   };
 
   const handleProjectClick = (proj) => {
     setEditProject(proj);
-    setProject({ ...proj, tasks: proj.tasks || [] });
-    setNewTask({ title: '', description: '' });
+    setProject({ ...proj });
+    setNewTask({ title: '', description: '', date: '', assignedTo: '' });
     setShowCreateModal(true);
   };
 
@@ -53,19 +58,34 @@ const Projects = () => {
 
   const handleAddTask = () => {
     if (!newTask.title.trim()) return;
-    setProject((prev) => ({
-      ...prev,
-      tasks: [...prev.tasks, newTask],
-    }));
-    setNewTask({ title: '', description: '' });
+    setProject((prev) => {
+      const updatedItems = [...prev.columns.todo.items, newTask];
+      return {
+        ...prev,
+        columns: {
+          ...prev.columns,
+          todo: {
+            ...prev.columns.todo,
+            items: updatedItems,
+          },
+        },
+      };
+    });
+    setNewTask({ title: '', description: '', date: '', assignedTo: '' });
   };
 
-  const handleDeleteTask = (index) => {
-    const updatedTasks = [...project.tasks];
-    updatedTasks.splice(index, 1);
+  const handleDeleteTask = (colName, index) => {
+    const updatedItems = [...project.columns[colName].items];
+    updatedItems.splice(index, 1);
     setProject((prev) => ({
       ...prev,
-      tasks: updatedTasks,
+      columns: {
+        ...prev.columns,
+        [colName]: {
+          ...prev.columns[colName],
+          items: updatedItems,
+        },
+      },
     }));
   };
 
@@ -102,16 +122,16 @@ const Projects = () => {
                 <label className="text-sm font-semibold block mb-1">Titre</label>
                 <input
                   className="w-full border border-gray-300 rounded px-3 py-2"
-                  value={project.title}
-                  onChange={(e) => setProject({ ...project, title: e.target.value })}
+                  value={project.projectName}
+                  onChange={(e) => setProject({ ...project, projectName: e.target.value })}
                 />
               </div>
               <div>
                 <label className="text-sm font-semibold block mb-1">Catégorie</label>
                 <input
                   className="w-full border border-gray-300 rounded px-3 py-2"
-                  value={project.type}
-                  onChange={(e) => setProject({ ...project, type: e.target.value })}
+                  value={project.category}
+                  onChange={(e) => setProject({ ...project, category: e.target.value })}
                 />
               </div>
               <div>
@@ -177,28 +197,40 @@ const Projects = () => {
               <label className="text-sm font-semibold block mb-1">Description</label>
               <textarea
                 className="w-full border border-gray-300 rounded px-3 py-2 h-24"
-                value={project.description}
+                value={project.description || ''}
                 onChange={(e) => setProject({ ...project, description: e.target.value })}
               />
             </div>
 
-            {/* 🔧 Tasks Section */}
             <div className="mb-6">
-              <label className="text-sm font-semibold block mb-2">Tâches</label>
-              <div className="flex gap-2 mb-3">
+              <label className="text-sm font-semibold block mb-2">Tâches (À faire)</label>
+              <div className="flex flex-wrap gap-2 mb-3">
                 <input
                   type="text"
                   placeholder="Titre"
                   value={newTask.title}
                   onChange={(e) => setNewTask({ ...newTask, title: e.target.value })}
-                  className="w-1/2 border border-gray-300 rounded px-3 py-2"
+                  className="flex-1 border border-gray-300 rounded px-3 py-2"
                 />
                 <input
                   type="text"
                   placeholder="Description"
                   value={newTask.description}
                   onChange={(e) => setNewTask({ ...newTask, description: e.target.value })}
-                  className="w-1/2 border border-gray-300 rounded px-3 py-2"
+                  className="flex-1 border border-gray-300 rounded px-3 py-2"
+                />
+                <input
+                  type="date"
+                  value={newTask.date}
+                  onChange={(e) => setNewTask({ ...newTask, date: e.target.value })}
+                  className="flex-1 border border-gray-300 rounded px-3 py-2"
+                />
+                <input
+                  type="text"
+                  placeholder="Assigné à"
+                  value={newTask.assignedTo}
+                  onChange={(e) => setNewTask({ ...newTask, assignedTo: e.target.value })}
+                  className="flex-1 border border-gray-300 rounded px-3 py-2"
                 />
                 <button
                   onClick={handleAddTask}
@@ -208,27 +240,37 @@ const Projects = () => {
                 </button>
               </div>
 
-              {project.tasks.length > 0 && (
-                <ul className="divide-y border rounded bg-gray-50">
-                  {project.tasks.map((task, index) => (
-                    <li
-                      key={`${task.title}-${index}`}
-                      className="p-3 flex justify-between items-start"
-                    >
-                      <div>
-                        <div className="font-medium">{task.title}</div>
-                        <div className="text-sm text-gray-500">{task.description}</div>
-                      </div>
-                      <button
-                        onClick={() => handleDeleteTask(index)}
-                        className="text-red-500 hover:text-red-700 text-sm"
-                      >
-                        Supprimer
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              )}
+              {['todo', 'inProgress', 'done'].map((col) => (
+                <div key={col} className="mb-4">
+                  <h4 className="text-md font-semibold mb-1">{project.columns[col].name}</h4>
+                  {project.columns[col].items.length > 0 ? (
+                    <ul className="divide-y border rounded bg-gray-50">
+                      {project.columns[col].items.map((task, index) => (
+                        <li
+                          key={`${col}-${task.title}-${index}`}
+                          className="p-3 flex justify-between items-start"
+                        >
+                          <div>
+                            <div className="font-medium">{task.title}</div>
+                            <div className="text-sm text-gray-500">{task.description}</div>
+                            <div className="text-xs text-gray-400 mt-1">
+                              {task.date} — Assigné à {task.assignedTo}
+                            </div>
+                          </div>
+                          <button
+                            onClick={() => handleDeleteTask(col, index)}
+                            className="text-red-500 hover:text-red-700 text-sm"
+                          >
+                            Supprimer
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="text-gray-400 text-sm">Aucune tâche</p>
+                  )}
+                </div>
+              ))}
             </div>
 
             <div className="flex justify-end space-x-4">

@@ -160,7 +160,7 @@ export const menuItems = [
   { name: 'Tableau de Bord', path: 'dashboard', icon: <Home size={18} /> },
   { name: 'Calendrier', path: 'calendrier', icon: <Calendar size={18} /> },
   { name: 'Projets', path: 'projets', icon: <Folder size={18} /> },
-  { name: 'Taches', path: 'taches', icon: <CheckCheck size={20} /> },
+  { name: 'Tâches', path: 'taches', icon: <CheckCheck size={20} /> },
   { name: 'Paramètres', path: 'parametres', icon: <Settings size={20} /> },
   { name: 'Equipe', path: 'equipe', icon: <Users size={20} /> },
 ];
@@ -168,35 +168,125 @@ export const menuItems = [
 export const sampleProjects = [
   {
     projectName: "Refonte du Site Web",
-    status: "En Cours",
-    statusColor: "blue",
+    columns: {
+      todo: {
+        name: 'À faire',
+        items: [
+          {
+            id: 1,
+            title: 'Créer l’UI',
+            description: 'Design de la maquette',
+            date: '2025-07-01',
+            assignedTo: 'Mohamed',
+          },
+          {
+            id: 2,
+            title: 'Configurer le backend',
+            description: 'Connexion à la base de données',
+            date: '2025-07-02',
+            assignedTo: 'Noura',
+          },
+        ],
+      },
+      inProgress: {
+        name: 'En cours',
+        items: [
+          {
+            id: 3,
+            title: 'API utilisateurs',
+            description: 'Création et authentification',
+            date: '2025-07-03',
+            assignedTo: 'Sami',
+          },
+        ],
+      },
+      done: {
+        name: 'Terminé',
+        items: [
+          {
+            id: 4,
+            title: 'Déploiement',
+            description: 'Déployé sur Vercel',
+            date: '2025-07-04',
+            assignedTo: 'Amine',
+          },
+        ],
+      },
+    },
+    status: "En cours",
     category: "Modèle Corporatif",
-    progress: 35.5,
     completedTasks: 7,
     totalTasks: 20,
     startDate: "1 mars 2024",
-    endDate: "31 mars 2024"
+    endDate: "31 mars 2024",
   },
   {
     projectName: "Application Mobile",
-    status: "En Attente",
-    statusColor: "amber",
+    columns: {
+      todo: {
+        name: 'À faire',
+        items: [
+          {
+            id: 5,
+            title: 'Wireframe initial',
+            description: 'Esquisse des écrans principaux',
+            date: '2025-07-05',
+            assignedTo: 'Karim',
+          },
+        ],
+      },
+      inProgress: {
+        name: 'En cours',
+        items: [],
+      },
+      done: {
+        name: 'Terminé',
+        items: [],
+      },
+    },
+    status: "En attente",
     category: "Kit UI Moderne",
-    progress: 15,
     completedTasks: 3,
     totalTasks: 15,
     startDate: "15 février 2024",
-    endDate: "30 avril 2024"
+    endDate: "30 avril 2024",
   },
   {
     projectName: "Intégration API",
+    columns: {
+      todo: {
+        name: 'À faire',
+        items: [],
+      },
+      inProgress: {
+        name: 'En cours',
+        items: [],
+      },
+      done: {
+        name: 'Terminé',
+        items: [
+          {
+            id: 6,
+            title: 'Connexion API météo',
+            description: 'Connexion à l’API externe',
+            date: '2025-07-06',
+            assignedTo: 'Leila',
+          },
+          {
+            id: 7,
+            title: 'Tests finaux',
+            description: 'Tests unitaires et d’intégration',
+            date: '2025-07-07',
+            assignedTo: 'Ali',
+          },
+        ],
+      },
+    },
     status: "Terminé",
-    statusColor: "green",
     category: "Modèle Technique",
-    progress: 100,
     completedTasks: 12,
     totalTasks: 12,
     startDate: "10 janvier 2024",
-    endDate: "5 février 2024"
+    endDate: "5 février 2024",
   }
 ];

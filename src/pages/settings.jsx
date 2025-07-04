@@ -162,7 +162,7 @@ const SettingsPage = () => {
             onClick={() => setActiveTab(tab.key)}
             className={`flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all ${
               activeTab === tab.key
-                ? 'bg-purple-600 text-white'
+                ? 'bg-blue-600 text-white'
                 : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
             }`}
           >
