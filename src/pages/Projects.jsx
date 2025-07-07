@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import ProjectsList from '../components/ProjectsList';
 import { sampleProjects } from '../constants/index';
+import { Filter } from 'lucide-react';
 
 const defaultProject = {
   projectName: '',
@@ -26,6 +27,9 @@ const Projects = () => {
   const [project, setProject] = useState(defaultProject);
   const [editProject, setEditProject] = useState(null);
   const [newTask, setNewTask] = useState({ title: '', description: '', date: '', assignedTo: '' });
+  const [filterOpen, setFilterOpen] = useState(false);
+  const [selectedStatus, setSelectedStatus] = useState(null);
+  const dropdownRef = useRef(null);
 
   const handleCreateClick = () => {
     setEditProject(null);
@@ -89,19 +93,70 @@ const Projects = () => {
     }));
   };
 
+  const filteredProjects = selectedStatus
+    ? sampleProjects.filter((p) => p.status === selectedStatus)
+    : sampleProjects;
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setFilterOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="text-3xl font-bold mb-6 text-blue-600">Projets</div>
-      <div className="flex justify-end">
+      <div className="flex justify-between items-center mb-4">
         <button
           onClick={handleCreateClick}
-          className="mb-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg shadow-sm transition duration-200"
+          className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg shadow-sm transition duration-200"
         >
           Créer
         </button>
+
+        <div className="relative" ref={dropdownRef}>
+          <button
+            onClick={() => setFilterOpen(!filterOpen)}
+            className="flex items-center gap-2 border px-4 py-2 rounded hover:bg-gray-100"
+          >
+            <Filter size={18} />
+            Filtrer
+          </button>
+
+          {filterOpen && (
+            <div className="absolute right-0 mt-2 bg-white border rounded shadow-md z-10 w-48">
+              <div
+                className="px-4 py-2 text-sm hover:bg-gray-100 cursor-pointer"
+                onClick={() => {
+                  setSelectedStatus(null);
+                  setFilterOpen(false);
+                }}
+              >
+                Tous les statuts
+              </div>
+              {statusOptions.map((status) => (
+                <div
+                  key={status}
+                  onClick={() => {
+                    setSelectedStatus(status);
+                    setFilterOpen(false);
+                  }}
+                  className="px-4 py-2 text-sm hover:bg-gray-100 cursor-pointer"
+                >
+                  {status}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
 
-      <ProjectsList projects={sampleProjects} onProjectClick={handleProjectClick} />
+      <ProjectsList projects={filteredProjects} onProjectClick={handleProjectClick} />
 
       {showCreateModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
@@ -159,7 +214,7 @@ const Projects = () => {
                   value={project.status}
                   onChange={(e) => setProject({ ...project, status: e.target.value })}
                 >
-                  {statusOptions.map((status) => (
+                  {statusOptions.slice(1).map((status) => (
                     <option key={status} value={status}>
                       {status}
                     </option>

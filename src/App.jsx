@@ -7,6 +7,7 @@ import Projects from './pages/Projects';
 import LandingPage from './pages/landing';
 import Tasks from './pages/Tasks';
 import ProfilePage from './pages/profile';
+import Equipe from './pages/equipe';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="projets" element={<Projects />} />
           <Route path="parametres" element={<Settings />} />
           <Route path="taches" element={<Tasks />} />
+          <Route path="equipe" element={<Equipe />} />
         </Route>
 
         <Route
