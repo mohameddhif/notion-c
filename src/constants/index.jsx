@@ -161,8 +161,9 @@ export const menuItems = [
   { name: 'Calendrier', path: 'calendrier', icon: <Calendar size={18} /> },
   { name: 'Projets', path: 'projets', icon: <Folder size={18} /> },
   { name: 'Tâches', path: 'taches', icon: <CheckCheck size={20} /> },
-  { name: 'Paramètres', path: 'parametres', icon: <Settings size={20} /> },
   { name: 'Equipe', path: 'equipe', icon: <Users size={20} /> },
+  { name: 'Paramètres', path: 'parametres', icon: <Settings size={20} /> },
+  
 ];
 
 export const sampleProjects = [

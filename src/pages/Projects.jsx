@@ -122,7 +122,7 @@ const Projects = () => {
         <div className="relative" ref={dropdownRef}>
           <button
             onClick={() => setFilterOpen(!filterOpen)}
-            className="flex items-center gap-2 border px-4 py-2 rounded hover:bg-gray-100"
+            className="flex items-center gap-2 border  bg-gray-300 px-4 py-2 rounded hover:bg-gray-400"
           >
             <Filter size={18} />
             Filtrer

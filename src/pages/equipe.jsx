@@ -6,13 +6,27 @@ const defaultMember = {
   role: '',
   email: '',
   joinedDate: '',
+  avatar: null,
 };
 
 const Equipe = () => {
   const [members, setMembers] = useState([
-    { name: 'Mohamed', role: 'Développeur Frontend', email: 'mohamed@example.com', joinedDate: '2024-05-01' },
-    { name: 'Noura', role: 'Designer UI/UX', email: 'noura@example.com', joinedDate: '2024-04-15' },
+    {
+      name: 'Mohamed',
+      role: 'Développeur Frontend',
+      email: 'mohamed@example.com',
+      joinedDate: '2024-05-01',
+      avatar: null,
+    },
+    {
+      name: 'Noura',
+      role: 'Designer UI/UX',
+      email: 'noura@example.com',
+      joinedDate: '2024-04-15',
+      avatar: null,
+    },
   ]);
+
   const [showAddModal, setShowAddModal] = useState(false);
   const [newMember, setNewMember] = useState(defaultMember);
   const [selectedMember, setSelectedMember] = useState(null);
@@ -28,6 +42,17 @@ const Equipe = () => {
     const updated = [...members];
     updated.splice(index, 1);
     setMembers(updated);
+  };
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setNewMember((prev) => ({ ...prev, avatar: reader.result }));
+    };
+    reader.readAsDataURL(file);
   };
 
   return (
@@ -49,9 +74,18 @@ const Equipe = () => {
             className="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition cursor-pointer relative"
             onClick={() => setSelectedMember(member)}
           >
-            <div className="font-semibold text-lg text-gray-800">{member.name}</div>
-            <div className="text-sm text-gray-500">{member.role}</div>
-            <div className="text-xs text-gray-400 mt-1">Entré le {member.joinedDate}</div>
+            <div className="flex items-center gap-4">
+              <img
+                src={member.avatar || 'https://via.placeholder.com/48'}
+                alt={member.name}
+                className="w-12 h-12 rounded-full object-cover border"
+              />
+              <div>
+                <div className="font-semibold text-lg text-gray-800">{member.name}</div>
+                <div className="text-sm text-gray-500">{member.role}</div>
+                <div className="text-xs text-gray-400 mt-1">Entré le {member.joinedDate}</div>
+              </div>
+            </div>
             <button
               onClick={(e) => {
                 e.stopPropagation();
@@ -76,6 +110,26 @@ const Equipe = () => {
               &times;
             </button>
             <h2 className="text-lg font-semibold mb-4">Ajouter un membre</h2>
+
+            {/* Avatar Upload */}
+            <div className="mb-4">
+              <label className="block text-sm font-medium mb-1">Photo de profil</label>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageUpload}
+                className="w-full border border-gray-300 rounded px-3 py-2"
+              />
+              {newMember.avatar && (
+                <img
+                  src={newMember.avatar}
+                  alt="Aperçu"
+                  className="mt-3 w-20 h-20 rounded-full object-cover border"
+                />
+              )}
+            </div>
+
+            {/* Other Inputs */}
             {['name', 'role', 'email', 'joinedDate'].map((field) => (
               <div key={field} className="mb-4">
                 <label className="block text-sm font-medium mb-1">
@@ -118,7 +172,14 @@ const Equipe = () => {
               <X />
             </button>
             <h2 className="text-lg font-semibold mb-4">Informations</h2>
-            <div className="space-y-2">
+            <div className="space-y-3">
+              {selectedMember.avatar && (
+                <img
+                  src={selectedMember.avatar}
+                  alt={selectedMember.name}
+                  className="w-16 h-16 rounded-full object-cover border mb-2"
+                />
+              )}
               <div><strong>Nom:</strong> {selectedMember.name}</div>
               <div><strong>Rôle:</strong> {selectedMember.role}</div>
               <div><strong>Email:</strong> {selectedMember.email}</div>
