@@ -9,6 +9,10 @@ import { Home, Folder, Calendar, Settings, Users, FileText, ChevronLeft, CheckCh
 import { Factory } from 'lucide-react';
 
 import user1 from "../assets/profile-pictures/user1.jpg";
+import user2 from '../assets/profile-pictures/user2.jpg';
+import user3 from '../assets/profile-pictures/user3.jpeg';
+import user4 from '../assets/profile-pictures/user4.jpg';
+import user5 from '../assets/profile-pictures/user5.jpeg';
 
 export const navItems = [
   { label: "Fonctionnalités", href: "#" },
@@ -209,7 +213,7 @@ export const sampleProjects = [
             title: 'Déploiement',
             description: 'Déployé sur Vercel',
             date: '2025-07-04',
-            assignedTo: 'Amine',
+            assignedTo: 'Noura',
           },
         ],
       },
@@ -271,14 +275,14 @@ export const sampleProjects = [
             title: 'Connexion API météo',
             description: 'Connexion à l’API externe',
             date: '2025-07-06',
-            assignedTo: 'Leila',
+            assignedTo: 'Karim',
           },
           {
             id: 7,
             title: 'Tests finaux',
             description: 'Tests unitaires et d’intégration',
             date: '2025-07-07',
-            assignedTo: 'Ali',
+            assignedTo: 'Mohamed',
           },
         ],
       },
@@ -290,4 +294,42 @@ export const sampleProjects = [
     startDate: "10 janvier 2024",
     endDate: "5 février 2024",
   }
+];
+
+export const equipe = [
+  {
+    name: 'Mohamed',
+    role: 'Développeur Frontend',
+    email: 'mohamed@example.com',
+    joinedDate: '2024-05-01',
+    avatar: user1,
+  },
+  {
+    name: 'Noura',
+    role: 'Designer UI/UX',
+    email: 'noura@example.com',
+    joinedDate: '2024-04-15',
+    avatar: user2,
+  },
+  {
+    name: 'Sami',
+    role: 'Développeur Backend',
+    email: 'sami@example.com',
+    joinedDate: '2024-03-10',
+    avatar: user3,
+  },
+  {
+    name: 'Amine',
+    role: 'Chef de Projet',
+    email: 'amine@example.com',
+    joinedDate: '2024-02-20',
+    avatar: user4,
+  },
+  {
+    name: 'Karim',
+    role: 'QA Engineer',
+    email: 'karim@example.com',
+    joinedDate: '2024-01-12',
+    avatar: user5,
+  },
 ];

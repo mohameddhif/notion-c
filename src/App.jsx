@@ -6,7 +6,7 @@ import Settings from './pages/settings';
 import Projects from './pages/Projects';
 import LandingPage from './pages/landing';
 import Tasks from './pages/Tasks';
-import ProfilePage from './pages/profile';
+import ProfilePage from './pages/Profile';
 import Equipe from './pages/equipe';
 
 function App() {

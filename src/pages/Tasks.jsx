@@ -2,9 +2,15 @@ import React, { useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
 import { Plus, Trash2 } from 'lucide-react';
 import { sampleProjects } from '../constants/index';
+import {equipe} from '../constants/index';
+
 
 const buildInitialColumns = (projects) => {
-  const cols = { todo: { name: 'À faire', items: [] }, inProgress: { name: 'En cours', items: [] }, done: { name: 'Terminé', items: [] } };
+  const cols = {
+    todo: { name: 'À faire', items: [] },
+    inProgress: { name: 'En cours', items: [] },
+    done: { name: 'Terminé', items: [] },
+  };
   for (const key in projects) {
     for (const colKey in projects[key].columns) {
       projects[key].columns[colKey].items.forEach(item =>
@@ -70,19 +76,15 @@ const Tasks = () => {
     const isEditing = editingTask !== null;
     const newId = isEditing ? modalData.id : lastId + 1;
     const task = { ...modalData, id: newId };
-  
+
     setColumns(prev => {
       const updated = { ...prev };
-  
-      // Make sure we're not mutating the array directly
       for (const colId in updated) {
         updated[colId] = { ...updated[colId], items: [...updated[colId].items] };
       }
-  
+
       if (isEditing) {
         const { columnId: oldColId, index } = editingTask;
-  
-        // If column changed, remove from old column and add to new one
         if (oldColId !== task.columnId) {
           updated[oldColId].items.splice(index, 1);
           updated[task.columnId].items.push(task);
@@ -91,15 +93,14 @@ const Tasks = () => {
         }
       } else {
         updated[task.columnId].items.push(task);
-        setLastId(newId); // Only update lastId if it's a new task
+        setLastId(newId);
       }
-  
+
       return updated;
     });
-  
+
     setShowTaskModal(false);
   };
-  
 
   const handleDelete = (columnId, index) => {
     setColumns(prev => {
@@ -107,6 +108,11 @@ const Tasks = () => {
       items.splice(index, 1);
       return { ...prev, [columnId]: { ...prev[columnId], items } };
     });
+  };
+
+  const getAvatarByName = (name) => {
+    const member = equipe.find(m => m.name === name);
+    return member?.avatar || null;
   };
 
   return (
@@ -138,10 +144,17 @@ const Tasks = () => {
                           >
                             <div className="font-medium">{item.title}</div>
                             <div className="text-sm text-gray-500">{item.description}</div>
-                            <div className="text-sm text-gray-400 mt-1">
-                              📅 {item.date} — 👤 {item.assignedTo} — 🗂️ {item.project}
-                            </div>
-                            <div className="flex justify-end mt-2">
+                            <div className="text-sm text-gray-400 mt-1">🗂️ {item.project}</div>
+                            <div className="text-sm text-gray-400 mt-1">📅 {item.date}</div>
+                            <div className="flex items-center justify-between mt-2">
+                              <div className="flex items-center gap-2">
+                                <img
+                                  src={getAvatarByName(item.assignedTo)}
+                                  alt={item.assignedTo}
+                                  className="w-6 h-6 rounded-full object-cover"
+                                />
+                                <span className="text-sm text-gray-400">{item.assignedTo}</span>
+                              </div>
                               <button
                                 onClick={(e) => {
                                   e.stopPropagation();
@@ -165,15 +178,15 @@ const Tasks = () => {
         </div>
       </DragDropContext>
 
-      {/* Modal partagé */}
+      {/* Modal */}
       {showTaskModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white rounded-lg shadow-lg w-full max-w-md p-8 relative">
             <button onClick={() => setShowTaskModal(false)} className="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-xl font-bold">&times;</button>
             <h2 className="text-lg font-semibold mb-4">{editingTask ? 'Modifier une tâche' : 'Ajouter une tâche'}</h2>
-            {['title', 'description', 'date', 'assignedTo', 'project'].map(field => (
+            {['title', 'description', 'date', 'project'].map(field => (
               <div key={field} className="mb-4">
-                <label className="text-sm font-medium block mb-1">{field === 'assignedTo' ? 'Assigné à' : field.charAt(0).toUpperCase() + field.slice(1)}</label>
+                <label className="text-sm font-medium block mb-1">{field.charAt(0).toUpperCase() + field.slice(1)}</label>
                 <input
                   type={field === 'date' ? 'date' : 'text'}
                   value={modalData[field]}
@@ -182,9 +195,27 @@ const Tasks = () => {
                 />
               </div>
             ))}
+            {/* AssignedTo Dropdown */}
+            <div className="mb-4">
+              <label className="text-sm font-medium block mb-1">Assigné à</label>
+              <select
+                value={modalData.assignedTo}
+                onChange={e => setModalData(prev => ({ ...prev, assignedTo: e.target.value }))}
+                className="w-full border border-gray-300 rounded px-3 py-2"
+              >
+                <option value="">-- Choisir un membre --</option>
+                {equipe.map(member => (
+                  <option key={member.name} value={member.name}>{member.name}</option>
+                ))}
+              </select>
+            </div>
             <div className="flex justify-end space-x-4">
-              <button onClick={handleSave} className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">{editingTask ? 'Modifier' : 'Ajouter'}</button>
-              <button onClick={() => setShowTaskModal(false)} className="bg-white text-red-500 px-6 py-2 rounded hover:bg-gray-200 border-2 border-red-500">Annuler</button>
+              <button onClick={handleSave} className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">
+                {editingTask ? 'Modifier' : 'Ajouter'}
+              </button>
+              <button onClick={() => setShowTaskModal(false)} className="bg-white text-red-500 px-6 py-2 rounded hover:bg-gray-200 border-2 border-red-500">
+                Annuler
+              </button>
             </div>
           </div>
         </div>

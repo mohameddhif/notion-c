@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Plus, Trash2, X } from 'lucide-react';
+import {equipe} from '../constants/index'
 
 const defaultMember = {
   name: '',
@@ -10,22 +11,7 @@ const defaultMember = {
 };
 
 const Equipe = () => {
-  const [members, setMembers] = useState([
-    {
-      name: 'Mohamed',
-      role: 'Développeur Frontend',
-      email: 'mohamed@example.com',
-      joinedDate: '2024-05-01',
-      avatar: null,
-    },
-    {
-      name: 'Noura',
-      role: 'Designer UI/UX',
-      email: 'noura@example.com',
-      joinedDate: '2024-04-15',
-      avatar: null,
-    },
-  ]);
+  const [members, setMembers] = useState(equipe);
 
   const [showAddModal, setShowAddModal] = useState(false);
   const [newMember, setNewMember] = useState(defaultMember);

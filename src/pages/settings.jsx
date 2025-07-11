@@ -100,7 +100,6 @@ const SettingsPage = () => {
             <input className={inputClass} placeholder="Statut de tâche par défaut" />
             <button className="text-purple-600 text-sm mt-2">Inviter un membre</button>
             <div className="mt-6 border-t pt-4">
-              <h2 className="text-red-600 font-semibold">Zone de danger</h2>
               <button className="text-red-600 text-sm">Supprimer l’espace de travail</button>
             </div>
           </div>
@@ -130,7 +129,6 @@ const SettingsPage = () => {
             <p>Aucune facture disponible.</p>
 
             <div className="mt-6 border-t pt-4">
-              <h2 className="text-red-600 font-semibold">Zone de danger</h2>
               <button className="text-red-600 text-sm">Annuler l’abonnement</button>
             </div>
           </div>

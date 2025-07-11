@@ -10,6 +10,25 @@ import {
   Trash2,
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from 'recharts';
+import { sampleProjects } from '../constants/index';
+
+const projectProgressData = sampleProjects.map((project) => {
+  const progress = Math.round((project.completedTasks / project.totalTasks) * 100);
+  return {
+    name: project.projectName,
+    progress,
+  };
+});
+
 
 const Dashboard = () => {
   const [activeRange, setActiveRange] = useState('1M');
@@ -93,7 +112,15 @@ const Dashboard = () => {
               ))}
             </div>
           </div>
-          <div className="h-40 bg-gradient-to-b from-blue-100 to-white rounded" />
+          <ResponsiveContainer width="100%" height={220}>
+            <LineChart data={projectProgressData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" />
+              <YAxis domain={[0, 100]} tickFormatter={(tick) => `${tick}%`} />
+              <Tooltip formatter={(value) => `${value}%`} />
+              <Line type="monotone" dataKey="progress" stroke="#3B82F6" strokeWidth={2} />
+            </LineChart>
+          </ResponsiveContainer>
         </div>
 
         <div className="bg-blue-600 text-white p-4 rounded shadow flex flex-col justify-between">

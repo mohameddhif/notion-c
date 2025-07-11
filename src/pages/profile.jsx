@@ -5,7 +5,7 @@ const ProfilePage = () => {
     fullName: 'Mohamed Dhif',
     username: 'mohamed_d',
     email: 'dhif.mohamed@email.com',
-    bio: 'Développeur passionné par les outils de productivité.',
+    bio: 'lorem ipsum',
     avatar: null,
     jobTitle: 'Chef de projet',
     location: 'Tunis, Tunisie'
